@@ -49,7 +49,7 @@ class FreeplayState extends MusicBeatState
 
 	private var CurrentSongIcon:FlxSprite;
 
-	private var Catagories:Array<String> = ['dave', 'joke', 'extras', 'dave2.5', 'classic', 'cover', 'fanmade'];
+	private var Catagories:Array<String> = ['dave', 'joke', 'extras', 'dave2.5', 'classic', 'cover', 'fanmade', 'finale'];
 	var translatedCatagory:Array<String> = [
 		LanguageManager.getTextString('freeplay_dave'),
 		LanguageManager.getTextString('freeplay_joke'),
@@ -57,7 +57,7 @@ class FreeplayState extends MusicBeatState
 		LanguageManager.getTextString('freeplay_dave2.5'),
 		LanguageManager.getTextString('freeplay_classic'),
 		LanguageManager.getTextString('freeplay_cover'),
-		LanguageManager.getTextString('freeplay_fanmade')
+		LanguageManager.getTextString('freeplay_fanmade'),
 	];
 
 	private var CurrentPack:Int = 0;
@@ -221,7 +221,7 @@ class FreeplayState extends MusicBeatState
 		}
 		if (FlxG.save.data.terminalFound && !awaitingExploitation)
 		{
-			Catagories = ['dave', 'joke', 'extras', 'dave2.5', 'classic', 'cover', 'fanmade', 'terminal'];
+			Catagories = ['dave', 'joke', 'extras', 'dave2.5', 'classic', 'cover', 'fanmade', 'terminal', 'finale'];
 			translatedCatagory = [
 				LanguageManager.getTextString('freeplay_dave'),
 				LanguageManager.getTextString('freeplay_joke'),
@@ -230,7 +230,7 @@ class FreeplayState extends MusicBeatState
 				LanguageManager.getTextString('freeplay_classic'),
 				LanguageManager.getTextString('freeplay_cover'),
 				LanguageManager.getTextString('freeplay_fanmade'),
-				LanguageManager.getTextString('freeplay_terminal')];
+				LanguageManager.getTextString('freeplay_terminal')
 		}
 
 		for (i in 0...Catagories.length)
@@ -354,7 +354,6 @@ class FreeplayState extends MusicBeatState
 						addWeek(['Cheating'], 14, ['bambi-3d']);
 					if (FlxG.save.data.unfairnessFound)
 						addWeek(['Unfairness'], 15, ['bambi-unfair']);
-					if (FlxG.save.data.cozenFound)
 						addWeek(['Cozen'], 15, ['bambi-unfair']);
 				}
 				if (FlxG.save.data.exbungoFound)
@@ -420,11 +419,13 @@ class FreeplayState extends MusicBeatState
 					addWeek(['Rigged'], 14, ['bambi-3d']);
 				if (FlxG.save.data.unfairnessFound)
 					addWeek(['Unfairness'], 15, ['bambi-unfair']);					
-				if (FlxG.save.data.cozenFound)
 					addWeek(['Cozen'], 15, ['bambi-unfair']);
 				if (FlxG.save.data.exploitationFound)
 					addWeek(['Exploitation'], 16, ['expunged']);
 				addWeek(['Enter Terminal'], 17, ['terminal']);
+			case 'finale':
+				if (FlxG.save.data.allfreeplaysongsbeaten)
+					addWeek(['Mastered'], 1, ['splitathon']);
 		}
 	}
 

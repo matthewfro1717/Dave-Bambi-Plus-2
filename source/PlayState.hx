@@ -735,6 +735,8 @@ class PlayState extends MusicBeatState
 				case 'house' | 'insanity' | 'supernovae' | 'old-supernovae' | 'warmup' | 'threedimensional' | 'second-tristan-song' |
 				'house-2.5' | 'insanity-2.5' | 'roots' | 'vs-dave-thanksgiving':
 					stageCheck = 'house';
+			        case 'mastered':
+					stageCheck = 'mastered';
 				case 'polygonized' | 'polygonized-2.5' | 'furiosity':
 					stageCheck = 'red-void';
 				case 'bonus-song':
@@ -1132,7 +1134,7 @@ class PlayState extends MusicBeatState
 			case 'farm' | 'farm-night'| 'farm-sunset':
 				dad.x += 200;
 				if (isShaggy) boyfriend.x += 150;
-			case 'house' | 'house-night' | 'house-sunset':
+			case 'house' | 'house-night' | 'house-sunset' | 'daveHouse_night':
 				dad.setPosition(50, 270);
 				if (dadmirror != null)
 				{
@@ -1453,6 +1455,8 @@ class PlayState extends MusicBeatState
 				credits = LanguageManager.getTextString('glitch_credit');
 			case 'unfairness':
 				credits = LanguageManager.getTextString('unfairness_credit');
+			case 'cozen':
+				credits = LanguageManager.getTextString('cozen_credit');
 			case 'cheating' | 'rigged':
 				if (!modchartoption) credits = LanguageManager.getTextString('cheating_nomod_credit');
 				else credits = LanguageManager.getTextString('cheating_credit');
@@ -1588,6 +1592,9 @@ class PlayState extends MusicBeatState
 			case 'polygonized' | 'polygonized-2.5':
 				preload('characters/3d_bf');
 				preload('characters/3d_gf');
+			case 'mastered':
+				preload('backgrounds/blue3d');
+				preload('backgrounds/redbg');
 			case 'maze' | 'indignancy':
 				preload('spotLight');
 			case 'shredder':
@@ -1958,6 +1965,31 @@ class PlayState extends MusicBeatState
 					gate.color = variantColor;
 					stageFront.color = variantColor;
 				}
+		        case 'mastered':
+				var bg:BGSprite = new BGSprite('bg', -600, -300, Paths.image('backgrounds/shared/sky_night'), null, 0.6, 0.6);
+				sprites.add(bg);
+				add(bg);
+						
+				var bg:BGSprite = new BGSprite('bg', -600, -300, Paths.image('backgrounds/shared/${skyType}'), null, 0.6, 0.6);
+				sprites.add(bg);
+				add(bg);
+				
+				var stageHills:BGSprite = new BGSprite('stageHills', -834, -159, Paths.image('backgrounds/dave-house/${assetType}hills'), null, 0.7, 0.7);
+				sprites.add(stageHills);
+				add(stageHills);
+
+				var grassbg:BGSprite = new BGSprite('grassbg', -1205, 580, Paths.image('backgrounds/dave-house/${assetType}grass bg'), null);
+				sprites.add(grassbg);
+				add(grassbg);
+	
+				var gate:BGSprite = new BGSprite('gate', -755, 250, Paths.image('backgrounds/dave-house/${assetType}gate'), null);
+				sprites.add(gate);
+				add(gate);
+	
+				var stageFront:BGSprite = new BGSprite('stageFront', -832, 505, Paths.image('backgrounds/dave-house/${assetType}grass'), null);
+				sprites.add(stageFront);
+				add(stageFront);
+
 			case 'inside-house':
 				bgZoom = 0.6;
 				stageName = 'insideHouse';
@@ -2505,7 +2537,7 @@ class PlayState extends MusicBeatState
 				{
 					FlxG.mouse.visible = true;
 					var redPortal = new BGSprite('hat', -30, 550, 'backgrounds/void/redPortal', [], 1, 1, true, true);
-					redPortal.setGraphicSize(Std.int(hat.width * 0.36));
+					redPortal.setGraphicSize(Std.int(redPortal.width * 0.36));
 					redPortal.updateHitbox();
 				}
 	
@@ -7777,6 +7809,30 @@ class PlayState extends MusicBeatState
 						remove(black);
 						defaultCamZoom -= 0.3;
 				}
+			case 'cozen':
+				switch (curStep)
+				{
+					case 1800:
+						subtitleManager.addSubtitle(LanguageManager.getTextString('cozen_sub10'), 0.02, 0.6);
+			                case 2328:
+				                subtitleManager.addSubtitle(LanguageManager.getTextString('cozen_sub1'), 0.02, 0.6);
+					case 2355:
+				                subtitleManager.addSubtitle(LanguageManager.getTextString('cozen_sub2'), 0.02, 0.6);
+					case 2388:
+				                subtitleManager.addSubtitle(LanguageManager.getTextString('cozen_sub4'), 0.02, 1.5);
+					case 2479:
+			                        subtitleManager.addSubtitle(LanguageManager.getTextString('cozen_sub6'), 0.02, 1);
+					case 2493:
+				                subtitleManager.addSubtitle(LanguageManager.getTextString('cozen_sub7'), 0.02, 1);
+					case 2525:
+				                subtitleManager.addSubtitle(LanguageManager.getTextString('cozen_sub8'), 0.02, 1);
+					case 2554:
+				                subtitleManager.addSubtitle(LanguageManager.getTextString('cozen_sub9'), 0.02, 1);
+					case 2576:
+					        FlxG.camera.flash(FlxColor.WHITE, 1);
+					        dad.visible = false;
+					        iconP2.visible = false;
+				}
 			case 'corn-theft':
 				switch (curStep)
 				{
@@ -7979,6 +8035,25 @@ class PlayState extends MusicBeatState
 					case 4799 | 5823 | 6079 | 8383:
 						hasTriggeredDumbshit = false;
 						updatevels = false;
+				}
+
+			case 'mastered':
+				switch (curStep)
+				{
+					case 376 | 378 | 380 | 382:
+						defaultCamZoom = 0.3;
+					case 384 | 895 | 1412:
+						switchDad(FlxG.random.int(0, 999) == 0 ? 'dave-splitaton-mastered' : 'dave-3d-mastered', dad.getPosition());
+						curbg.loadGraphic(Paths.image('backgrounds/blue3d', 'shared'));
+					case 639 | 1152 | 1919:
+						switchDad(FlxG.random.int(0, 999) == 0 ? 'dave-3d-mastered' : 'dave-splitaton-mastered', dad.getPosition());
+						curbg.visible = false;
+					case 1152:
+						switchDad(FlxG.random.int(0, 999) == 0 ? 'dave-splitaton-mastered' : 'dave-scared-mastered', dad.getPosition());
+						curbg.loadGraphic(Paths.image('backgrounds/redbg', 'shared'));
+					case 1176:
+						switchDad(FlxG.random.int(0, 999) == 0 ? 'dave-scared-mastered' : 'dave-splitaton-mastered', dad.getPosition());
+						curbg.loadGraphic(Paths.image('backgrounds/redbg', 'shared'));
 				}
 
 			case 'insanity' | 'insanity-2.5':
@@ -8204,31 +8279,6 @@ class PlayState extends MusicBeatState
 						dad.visible = false;
 						iconP2.visible = false;
 				}
-			case 'cozen':
-				switch(curStep)
-				{
-					case 1800:
-						subtitleManager.addSubtitle(LanguageManager.getTextString('cozen_sub10'), 0.02, 0.6);
-					case 2328:
-					    subtitleManager.addSubtitle(LanguageManager.getTextString('cozen_sub1'), 0.02, 0.6);
-					case 2355:
-						subtitleManager.addSubtitle(LanguageManager.getTextString('cozen_sub2'), 0.02, 0.6);
-					case 2388:
-						subtitleManager.addSubtitle(LanguageManager.getTextString('cozen_sub4'), 0.02, 1.5);
-					case 2479:
-						subtitleManager.addSubtitle(LanguageManager.getTextString('cozen_sub6'), 0.02, 1);
-					case 2493:
-						subtitleManager.addSubtitle(LanguageManager.getTextString('cozen_sub7'), 0.02, 1);
-					case 2525:
-						subtitleManager.addSubtitle(LanguageManager.getTextString('cozen_sub8'), 0.02, 1);
-					case 2554:
-						subtitleManager.addSubtitle(LanguageManager.getTextString('cozen_sub9'), 0.02, 1););
-					case 2576:
-						FlxG.camera.flash(FlxColor.WHITE, 1);
-						dad.visible = false;
-						iconP2.visible = false;
-				}
-
 				case 'cheating':
 					switch(curStep)
 					{
@@ -8315,6 +8365,7 @@ class PlayState extends MusicBeatState
 							FlxTween.tween(black, {alpha: 0}, 1);
 
 					}
+
 			case 'polygonized' | 'polygonized-2.5':
 				switch(curStep)
 				{
@@ -8365,6 +8416,7 @@ class PlayState extends MusicBeatState
 							}
 						}
 				}
+					
 			case 'adventure':
 				switch (curStep)
 				{

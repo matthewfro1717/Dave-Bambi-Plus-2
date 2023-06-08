@@ -73,7 +73,7 @@ class MusicPlayerState extends MusicBeatState
             ['roofs', 'baldi'],
             ['importumania', 'importumania'], 
             ['recursed', 'recurser'],
-            ['vs-dave-rap-two', 'dave-cool'],  
+            ['vs-dave-rap-two', 'dave-cool'],
         ];
         for (i in 0...secretSongs.length)
         {
@@ -92,7 +92,7 @@ class MusicPlayerState extends MusicBeatState
                 case 'vs-dave-rap-two': FlxG.save.data.vsDaveRapTwoFound;
                 case 'importumania': FlxG.save.data.importumaniaFound;
                 case 'rigged': FlxG.save.data.riggedFound;
-                case 'oppression':  FlxG.save.data.oppressionFound;
+                case 'oppression': FlxG.save.data.oppressionFound;
                 default: false;
             }
             if (unlockSong)
